@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
+import 'package:ptp/list.dart';
 
 import 'Theme/first_screen.dart';
 import 'Theme/theme_changer.dart';
+import 'drawing/DrawingDataNotifier.dart';
 
 void main() {
   runApp( MyApp());
@@ -15,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeChanger(lightTheme)),
+        ChangeNotifierProvider(create: (_) => DrawingDataNotifier(backgroundColor: const Color(0x00555555))),
       ],
       child: MaterialAppWithTheme(),
     );
@@ -27,7 +30,7 @@ class MaterialAppWithTheme extends StatelessWidget {
     final theme = Provider.of<ThemeChanger>(context);
     return MaterialApp(
       theme: theme.getTheme,
-      home: FirstScreen(),
+      home: ListScreen(),
     );
   }
 }
