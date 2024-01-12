@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:ptp/list.dart';
+import 'package:ptp/util/tempPage.dart';
 
 import 'Theme/first_screen.dart';
 import 'Theme/theme_changer.dart';
 import 'drawing/DrawingDataNotifier.dart';
+import 'initTest/initTest.dart';
 
 void main() {
   runApp( MyApp());
@@ -18,6 +20,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeChanger(lightTheme)),
         ChangeNotifierProvider(create: (_) => DrawingDataNotifier(backgroundColor: const Color(0x00555555))),
+        ChangeNotifierProvider<InitProvider>(create: (_) => InitProvider.instance(),)
       ],
       child: MaterialAppWithTheme(),
     );
@@ -28,6 +31,12 @@ class MaterialAppWithTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeChanger>(context);
+    final providerTemp = Provider.of<InitProvider>(context);
+    if(theme.getColor == Colors.black){
+      return MaterialApp(
+        home: TempPagePara(paraString: "paraString"),
+      );
+    }
     return MaterialApp(
       theme: theme.getTheme,
       home: ListScreen(),
