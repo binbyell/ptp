@@ -30,8 +30,8 @@ class DrawingPageState extends State<DrawingPage> {
     super.initState();
     painterController = PainterController()
       ..setStrokeColor(Colors.black)
-      ..setMinStrokeWidth(3)
-      ..setMaxStrokeWidth(15)
+      ..setMinStrokeWidth(Provider.of<DrawingDataNotifier>(context, listen: false).getMinStroke)
+      ..setMaxStrokeWidth(Provider.of<DrawingDataNotifier>(context, listen: false).getMaxStroke)
       ..setBlurSigma(0.0)
       ..setPenType(PenType.paintbrush2)
       ..setBlendMode(ui.BlendMode.srcOver)
@@ -44,6 +44,8 @@ class DrawingPageState extends State<DrawingPage> {
     double _device_width = MediaQuery.of(context).size.width;
     //디바이스 높이
     double _device_height = MediaQuery.of(context).size.height;
+    painterController.setMinStrokeWidth(Provider.of<DrawingDataNotifier>(context).getMinStroke);
+    painterController.setMaxStrokeWidth(Provider.of<DrawingDataNotifier>(context).getMaxStroke);
     return Scaffold(
       appBar: AppBar(),
       // backgroundColor: const Color(0xffc8c8c8),
@@ -314,19 +316,20 @@ class _ControlsState extends State<Controls> {
                 '${widget.pc?.getState()!.strokeMinWidth.toStringAsFixed(1)}'),
             Expanded(
               child: Slider.adaptive(
-                  value: widget.pc?.getState()?.strokeMinWidth ?? 0,
+                  value: penColorChanger.getMinStroke,//widget.pc?.getState()?.strokeMinWidth ?? 0,
                   min: 1,
                   max: 20,
                   onChanged: (value) {
-                    if (widget.pc != null) {
-                      widget.pc?.setMinStrokeWidth(value);
-                      if (widget.pc!.getState()!.strokeMinWidth >
-                          widget.pc!.getState()!.strokeMaxWidth) {
-                        widget.pc?.setMinStrokeWidth(
-                            widget.pc!.getState()!.strokeMaxWidth);
-                      }
-                      setState(() {});
-                    }
+                    // if (widget.pc != null) {
+                    //   widget.pc?.setMinStrokeWidth(value);
+                    //   if (widget.pc!.getState()!.strokeMinWidth >
+                    //       widget.pc!.getState()!.strokeMaxWidth) {
+                    //     widget.pc?.setMinStrokeWidth(
+                    //         widget.pc!.getState()!.strokeMaxWidth);
+                    //   }
+                    //   setState(() {});
+                    // }
+                    penColorChanger.setMinStroke(value);
                   }),
             ),
           ],
@@ -339,19 +342,20 @@ class _ControlsState extends State<Controls> {
                 '${widget.pc?.getState()!.strokeMaxWidth.toStringAsFixed(1)}'),
             Expanded(
               child: Slider.adaptive(
-                  value: widget.pc?.getState()?.strokeMaxWidth ?? 0,
+                  value: penColorChanger.getMaxStroke,//widget.pc?.getState()?.strokeMaxWidth ?? 0,
                   min: 1,
                   max: 40,
                   onChanged: (value) {
-                    if (widget.pc != null) {
-                      widget.pc!.setMaxStrokeWidth(value);
-                      if (widget.pc!.getState()!.strokeMaxWidth <
-                          widget.pc!.getState()!.strokeMinWidth) {
-                        widget.pc!.setMaxStrokeWidth(
-                            widget.pc!.getState()!.strokeMinWidth);
-                      }
-                      setState(() {});
-                    }
+                    // if (widget.pc != null) {
+                    //   widget.pc!.setMaxStrokeWidth(value);
+                    //   if (widget.pc!.getState()!.strokeMaxWidth <
+                    //       widget.pc!.getState()!.strokeMinWidth) {
+                    //     widget.pc!.setMaxStrokeWidth(
+                    //         widget.pc!.getState()!.strokeMinWidth);
+                    //   }
+                    //   setState(() {});
+                    // }
+                    penColorChanger.setMaxStroke(value);
                   }),
             ),
           ],
@@ -364,14 +368,15 @@ class _ControlsState extends State<Controls> {
                 '${widget.pc?.getState()!.blurSigma.toStringAsFixed(1)}'),
             Expanded(
               child: Slider.adaptive(
-                  value: widget.pc?.getState()?.blurSigma ?? 0,
+                  value: penColorChanger.getBlur,//widget.pc?.getState()?.blurSigma ?? 0,
                   min: 0.0,
                   max: 10.0,
                   onChanged: (value) {
-                    if (widget.pc != null) {
-                      widget.pc!.setBlurSigma(value);
-                      setState(() {});
-                    }
+                    // if (widget.pc != null) {
+                    //   widget.pc!.setBlurSigma(value);
+                    //   setState(() {});
+                    // }
+                    penColorChanger.setBlur(value);
                   }),
             ),
           ],

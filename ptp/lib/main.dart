@@ -32,11 +32,11 @@ class MaterialAppWithTheme extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeChanger>(context);
     final providerTemp = Provider.of<InitProvider>(context);
-    if(theme.getColor == Colors.black){
-      return MaterialApp(
-        home: TempPagePara(paraString: "paraString"),
-      );
-    }
+    // if(theme.getColor == Colors.black){
+    //   return MaterialApp(
+    //     home: TempPagePara(paraString: "paraString"),
+    //   );
+    // }
     return MaterialApp(
       theme: theme.getTheme,
       home: ListScreen(),

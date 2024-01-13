@@ -8,6 +8,11 @@ class DrawingDataNotifier extends ChangeNotifier {
 
   DrawingDataNotifier({required Color backgroundColor}) : _backgroundColor = backgroundColor;
 
+  // pen type value
+  double _minStroke = 1.0;
+  double _maxStroke = 5.0;
+  double _blur = 0.0;
+
   // pen color
   Color _currentColor = const Color(0xff443a49);
   final Queue<Color> _currentColors = Queue<Color>();
@@ -17,6 +22,33 @@ class DrawingDataNotifier extends ChangeNotifier {
   Uint8List? _imageRecentState;
   Uint8List? _backgroundImageMemory;
   Color _backgroundColor;
+
+  get getMinStroke => _minStroke;
+  get getMaxStroke => _maxStroke;
+  get getBlur => _blur;
+
+  void setMinStroke(double stroke){
+    if(stroke >= _maxStroke){
+      _minStroke = _maxStroke;
+      notifyListeners();
+      return;
+    }
+    _minStroke = stroke;
+    notifyListeners();
+  }
+  void setMaxStroke(double stroke){
+    if(stroke <= _minStroke){
+      _maxStroke = _minStroke;
+      notifyListeners();
+      return;
+    }
+    _maxStroke = stroke;
+    notifyListeners();
+  }
+  void setBlur(double blue){
+    _blur = blue;
+    notifyListeners();
+  }
 
   get getColor => _currentColor;
   void setColor(Color pickedColor){
