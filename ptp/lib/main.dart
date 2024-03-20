@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
+import 'package:ptp/drawing02/notifierDrawing.dart';
 import 'package:ptp/list.dart';
+import 'package:ptp/testProvider/testProvider.dart';
 import 'package:ptp/util/tempPage.dart';
 
 import 'Theme/first_screen.dart';
@@ -20,7 +22,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeChanger(lightTheme)),
         ChangeNotifierProvider(create: (_) => DrawingDataNotifier(backgroundColor: const Color(0x00555555))),
-        ChangeNotifierProvider<InitProvider>(create: (_) => InitProvider.instance(),)
+        ChangeNotifierProvider<InitProvider>(create: (_) => InitProvider.instance(),),
+        ChangeNotifierProvider(create: (_) => TestProvider()),
+        ChangeNotifierProvider(create: (_) => NotifierDrawing(backgroundColor: const Color(0x00555555)))
       ],
       child: MaterialAppWithTheme(),
     );

@@ -44,6 +44,8 @@ dependencies:
   # for drawing
   finger_painter: ^1.1.0
 
+  flutter_spinkit: ^5.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -67,9 +69,28 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/temp.png
+    - assets/images/temp2.png
+    - assets/images/tabHomeSample.png
+    - assets/images/unsplash_yu68fUQDvOI.png
+    - assets/images/Rectangle 311.png
+    - assets/images/Bling.png
+    - assets/images/exhibition.png
+    - assets/images/BlingIcon.png
+    - assets/images/worksV2.png
+    - assets/images/__tempImg.jpg
+    - assets/images/bto_horizon.png
+    - assets/images/background01.jpg
+    - assets/images/bling_character.png
+    - assets/images/pen1.png
+    - assets/images/pen2.png
+    - assets/images/pen3.png
+    - assets/images/pen4.png
+    - assets/images/pen5.png
+    - assets/images/pen6.png
+    - assets/images/artIsEmpty.png
+    - assets/images/changeMyBling.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
