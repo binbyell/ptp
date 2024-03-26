@@ -1,8 +1,9 @@
 
 import 'dart:collection';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:ptp/drawing02/DotInfo.dart';
+import 'package:ptp/08_drawing02/DotInfo.dart';
 
 abstract final class BlingKeys {
   BlingKeys._();
@@ -22,26 +23,36 @@ abstract final class BlingKeys {
 // }
 
 
-class NotifierDrawing extends ChangeNotifier{
+class NotifierDrawing03 extends ChangeNotifier{
 
-  NotifierDrawing({required Color backgroundColor}) : _backgroundColor = backgroundColor;
+  NotifierDrawing03({required Color backgroundColor}) : _backgroundColor = backgroundColor;
+
+
 
   // lines
   final _lines = <List<DotInfo>>[];
   List<List<DotInfo>> get getLines => _lines;
+  // List<List<DotInfo>> getLines() => _lines;
   void drawingStart(DragStartDetails s){
     var oneLine = <DotInfo>[];
-    oneLine.add(DotInfo(s.localPosition, _minStroke, Colors.black, _blur));
+    oneLine.add(DotInfo(s.localPosition, _showStroke, _currentColor, _blur));
     _lines.add(oneLine);
+    // notifyListeners();
+  }
+  void drawingUpdate({required PointerEvent s, double? pressure}){
+    _lines.last.add(DotInfo(s.localPosition, pressure==null?_showStroke:_showStroke*pressure, _currentColor, _blur));
     notifyListeners();
   }
-  void drawingUpdate(DragUpdateDetails s){
-    _lines.last.add(DotInfo(s.localPosition, _minStroke, Colors.black, _blur));
-    notifyListeners();
+  void drawingEnd(){
+
+    _lines.clear();
+    // notifyListeners();
   }
   void undoDrawing(){
+    undoImageRam();
     try{
       _lines.removeLast();
+      // notifyListeners();
     }
     on RangeError{
       //스넥바 출력시키기
@@ -66,9 +77,8 @@ class NotifierDrawing extends ChangeNotifier{
   }
 
   // pen type value
-  double _minStroke = 1.0;
-  double _maxStroke = 5.0;
-  double _widthDifference = 1;
+  double _showStroke = 1.0;
+  double _pressure = 1;
   double _blur = 0.0;
 
   // pen color
@@ -85,57 +95,26 @@ class NotifierDrawing extends ChangeNotifier{
   static final GlobalKey _globalKey = BlingKeys.notifierDrawingKey;
   get getGlobalKeyForWork => _globalKey;
 
-  get getMinStroke => _minStroke;
-  get getMaxStroke => _maxStroke;
-  double get getWidthDifference => _widthDifference;
+  get getShowStroke => _showStroke;
+  get getPressure => _pressure;
   double get getBlur => _blur;
 
-  void setMinStroke(double stroke){
-    _setMaxStroke(stroke * _widthDifference);
-    _minStroke = stroke;
+  void setShowStroke(double stroke){
+    _showStroke = stroke;
+    // _drawingStroke = _showStroke;
     notifyListeners();
   }
-  void _setMaxStroke(double stroke){
-    // if(stroke <= _minStroke){
-    //   _maxStroke = _minStroke;
-    //   notifyListeners();
-    //   return;
-    // }
-    print("when set max stroke, _widthDifference : $_widthDifference");
-    _maxStroke = stroke;
+  void setDrawingStroke(double pressure){
+    // _drawingStroke = pressure * _showStroke;
+    _pressure = pressure * 10 + 1;
     notifyListeners();
   }
   void setBlur(double blue){
     _blur = blue;
     notifyListeners();
   }
-  void setWidthDifference(int index){
-    switch(index){
-      case 0:
-        _widthDifference = 1;
-        break;
-      case 1:
-        _widthDifference = 1;
-        break;
-      case 2:
-        _widthDifference = 1;
-        break;
-      case 3:
-        _widthDifference = 3.21;
-        break;
-      case 4:
-        _widthDifference = 4.20;
-        break;
-      case 5:
-        _widthDifference = 3.75;
-        break;
-      default:_widthDifference = 1;
-    }
-    _setMaxStroke(_minStroke * _widthDifference);
-    notifyListeners();
-  }
 
-  get getColor => _currentColor;
+  Color get getColor => _currentColor;
   void setColor(Color pickedColor){
     _currentColor = pickedColor;
     addColors(_currentColor);
@@ -164,9 +143,11 @@ class NotifierDrawing extends ChangeNotifier{
 
   Queue<Uint8List?> get getImageRam => _imageRam;
 
-  void setImageRecent({Uint8List? image}){
-    _imageRecentState = image;
-  }
+  // void setImageRecent({Uint8List? image}){
+  //   _imageRecentState = image;
+  // }
+
+  Uint8List? get getImageRecent => _imageRecentState;
 
   void addImageRam({Uint8List? imgBytesListData}){
     _imageRecentState = imgBytesListData;
@@ -182,6 +163,7 @@ class NotifierDrawing extends ChangeNotifier{
     }
     if(_imageRam.isNotEmpty){
       _imageRecentState = _imageRam.first;
+      notifyListeners();
       return _imageRecentState;
     }
     return null;

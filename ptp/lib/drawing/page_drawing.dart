@@ -228,7 +228,7 @@ class _ControlsState extends State<Controls> {
 
             InkWell(
               onTap: ()async{
-                Color temp = await selectColor(context);
+                Color temp = await selectColor(context: context);
                 Provider.of<DrawingDataNotifier>(context, listen: false).setBackgroundColor(temp);
               },
               borderRadius: const BorderRadius.all(

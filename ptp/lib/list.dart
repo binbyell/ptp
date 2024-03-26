@@ -1,14 +1,16 @@
 
 import 'package:flutter/material.dart';
+import 'package:ptp/02_dataEditPage/DataEditPage.dart';
+import 'package:ptp/10_urlpreview/urlPreView.dart';
 import 'package:ptp/SelectInList/selectInList.dart';
-import 'package:ptp/Theme/first_screen.dart';
+import 'package:ptp/01_Theme/first_screen.dart';
 import 'package:ptp/checkProgress/progress.dart';
-import 'package:ptp/drawing02/pushPageDrawing.dart';
+import 'package:ptp/08_drawing02/pushPageDrawing.dart';
+import 'package:ptp/09_drawing03/pushPageDrawing03.dart';
 import 'package:ptp/testProvider/testP1.dart';
 import 'package:ptp/testProvider/testP2.dart';
 import 'package:ptp/util/tempPage.dart';
 
-import 'dataEditPage/DataEditPage.dart';
 import 'drawing/page_drawing.dart';
 
 class ListScreen extends StatelessWidget{
@@ -74,6 +76,18 @@ class ListScreen extends StatelessWidget{
                     child: const Text("drawing02"),
                     onPressed:(){
                       Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const PushPageDrawing()));
+                    }
+                ),
+                OutlinedButton(
+                    child: const Text("drawing03"),
+                    onPressed:(){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const PushPageDrawing03()));
+                    }
+                ),
+                OutlinedButton(
+                    child: const Text("urlPreview"),
+                    onPressed:(){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const UrlPreview()));
                     }
                 ),
               ],

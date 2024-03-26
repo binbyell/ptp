@@ -1,10 +1,15 @@
 
 import 'dart:math';
+import 'dart:ui';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ptp/drawing02/DotInfo.dart';
-import 'package:ptp/drawing02/notifierDrawing.dart';
-import 'package:ptp/drawing02/penTypeSeletButton.dart';
+import 'package:ptp/08_drawing02/Board.dart';
+import 'package:ptp/08_drawing02/DotInfo.dart';
+import 'package:ptp/08_drawing02/DrawingPainter.dart';
+import 'package:ptp/08_drawing02/notifierDrawing.dart';
+import 'package:ptp/08_drawing02/penTypeSeletButton.dart';
+import 'package:ptp/util/selectColor.dart';
 
 class PushPageDrawing extends StatefulWidget {
   const PushPageDrawing({ Key? key}): super(key: key);
@@ -41,7 +46,7 @@ class _PushPageDrawingState extends State<PushPageDrawing> {
                       selectedIndex: notifierDrawing.getSelectedPenIndex,
                       thisIndex: index,
                       onPressed: (){
-                        notifierDrawing.setPenIndex(index);
+                        Provider.of<NotifierDrawing>(context, listen: false).setPenIndex(index);
                       },
                       child: Container(
                         margin: EdgeInsets.zero,
@@ -56,50 +61,49 @@ class _PushPageDrawingState extends State<PushPageDrawing> {
             ),
           ),
           Divider(),
-          Container(
-            height: [deviceWidth, deviceHeight].reduce(min),
-            width: [deviceWidth, deviceHeight].reduce(min),
-            // decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: CustomPaint(
-                    painter: DrawingPainter(notifierDrawing.getLines),
-                  ),
-                ),
-                GestureDetector(
-                  onPanStart: (s){
-                    notifierDrawing.drawingStart(s);
-                  },
-                  onPanUpdate: (s){
-                    notifierDrawing.drawingUpdate(s);
-                  },
-                ),
-              ],
-            ),
+          Board(
+            size: Size([deviceWidth, deviceHeight].reduce(min), [deviceWidth, deviceHeight].reduce(min)),
           ),
           Divider(),
-          TextButton(
-            onPressed: (){
-              notifierDrawing.undoDrawing();
-            },
-            child: const Text("undo"),
+          Row(
+            children: [
+              TextButton(
+                onPressed: (){
+                  notifierDrawing.undoDrawing();
+                },
+                child: const Text("undo"),
+              ),
+              TextButton(
+                  style: TextButton.styleFrom(padding: EdgeInsets.zero,shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50)))),
+                  child: Container(
+                    height: 15,
+                    width: 15,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: SweepGradient(colors: [Colors.red, Colors.blue, Colors.yellow, Colors.red])
+                    ),
+                  ),
+                  onPressed: () async{
+                    Color pickedColor = await selectColor(context: context, baseColor: notifierDrawing.getColor);
+                    Provider.of<NotifierDrawing>(context, listen: false).setColor(pickedColor);
+                  })
+            ],
           ),
           /// min stroke width
           Row(
             children: [
               Text('  ${notifierDrawing.getSelectedProgress}  '
-                  '${notifierDrawing.getMinStroke.toStringAsFixed(1)}'),
+                  '${notifierDrawing.getShowStroke.toStringAsFixed(1)}'),
 
               Expanded(
                 child: Slider.adaptive(
-                    value:  notifierDrawing.getMinStroke,//widget.pc?.getState()?.strokeMinWidth ?? 0,
+                    value:  notifierDrawing.getShowStroke,//widget.pc?.getState()?.strokeMinWidth ?? 0,
                     min: 1,
                     max: 40,
                     activeColor: Color(0xffff824e),
                     thumbColor: Color(0xffff824e),
                     onChanged: (value) {
-                      notifierDrawing.setMinStroke(value);
+                      Provider.of<NotifierDrawing>(context, listen: false).setShowStroke(value);
                     }),
               ),
             ],
@@ -117,7 +121,7 @@ class _PushPageDrawingState extends State<PushPageDrawing> {
                     activeColor: Color(0xffff824e),
                     thumbColor: Color(0xffff824e),
                     onChanged: (value) {
-                      notifierDrawing.setBlur(value);
+                      Provider.of<NotifierDrawing>(context, listen: false).setBlur(value);
                     }),
               )
             ],
@@ -126,53 +130,4 @@ class _PushPageDrawingState extends State<PushPageDrawing> {
       ),
     );
   }
-}
-
-class DrawingPainter extends CustomPainter{
-  DrawingPainter(this.lines);
-  final List<List<DotInfo>> lines;
-  @override
-  void paint(Canvas canvas, Size size) {
-    for(var oneLine in lines){
-      Color? color;
-      double? size;
-      double? blur;
-      var l = <Offset>[];
-      var p = Path();
-      for(DotInfo oneDot in oneLine){
-        color ??= oneDot.color;
-        size ??= oneDot.size;
-        blur ??= oneDot.blur;
-        l.add(oneDot.offset);
-      }
-      p.addPolygon(l, false);
-      canvas.drawPath(
-          p,
-          Paint()
-            ..color = color!
-            ..strokeWidth=size!
-            ..maskFilter=MaskFilter.blur(BlurStyle.normal, blur!)
-            ..strokeCap=StrokeCap.round
-            ..style=PaintingStyle.stroke
-            // ..blendMode=BlendMode.dstOut
-            ..blendMode=BlendMode.darken
-      );
-    }
-    // print("dot Info lines Start");
-    // for(var oneLine in lines){
-    //   print("dot Info oneLine Start");
-    //   for(var oneDot in oneLine){
-    //     // print("dot Info oneDot \nsize:${oneDot.size}\nsize:${oneDot.offset}");
-    //   }
-    //   print("dot Info oneLine Start");
-    // }
-    // print("dot Info lines End");
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    // TODO: implement shouldRepaint
-    return true;
-  }
-
 }

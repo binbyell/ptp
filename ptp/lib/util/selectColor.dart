@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 
-Future<Color> selectColor(BuildContext context) async {
+Future<Color> selectColor({required BuildContext context, Color? baseColor}) async {
 
-  Color tempColor = Colors.black;
+  Color tempColor = baseColor??Colors.black;
   return await showDialog(context: context, builder: (BuildContext context){
     return AlertDialog(
       title: const Text('Pick a color!'),

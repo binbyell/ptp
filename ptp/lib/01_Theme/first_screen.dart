@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
-import 'package:ptp/Theme/theme_changer.dart';
+import 'package:ptp/01_Theme/theme_changer.dart';
 
 class FirstScreen extends StatelessWidget{
   @override

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ptp/drawing02/notifierDrawing.dart';
+import 'package:ptp/08_drawing02/notifierDrawing.dart';
 
 class AnimatedCheckSelectButton extends StatelessWidget{
   const AnimatedCheckSelectButton({
@@ -50,31 +50,29 @@ class AnimatedCheckSelectButton extends StatelessWidget{
 
 void setPenType({required int index, required BuildContext context}){
 
-  Provider.of<NotifierDrawing>(context, listen: false).setWidthDifference(index);
-
   switch(index){
     case 0:
-      Provider.of<NotifierDrawing>(context, listen: false).setMinStroke(1);
+      Provider.of<NotifierDrawing>(context, listen: false).setShowStroke(1);
       Provider.of<NotifierDrawing>(context, listen: false).setBlur(0);
       break;
     case 1:
-      Provider.of<NotifierDrawing>(context, listen: false).setMinStroke(20);
+      Provider.of<NotifierDrawing>(context, listen: false).setShowStroke(20);
       Provider.of<NotifierDrawing>(context, listen: false).setBlur(0);
       break;
     case 2:
-      Provider.of<NotifierDrawing>(context, listen: false).setMinStroke(20);
+      Provider.of<NotifierDrawing>(context, listen: false).setShowStroke(20);
       Provider.of<NotifierDrawing>(context, listen: false).setBlur(10);
       break;
     case 3:
-      Provider.of<NotifierDrawing>(context, listen: false).setMinStroke(7.7);
+      Provider.of<NotifierDrawing>(context, listen: false).setShowStroke(7.7);
       Provider.of<NotifierDrawing>(context, listen: false).setBlur(0);
       break;
     case 4:
-      Provider.of<NotifierDrawing>(context, listen: false).setMinStroke(4.4);
+      Provider.of<NotifierDrawing>(context, listen: false).setShowStroke(4.4);
       Provider.of<NotifierDrawing>(context, listen: false).setBlur(0);
       break;
     case 5:
-      Provider.of<NotifierDrawing>(context, listen: false).setMinStroke(4);
+      Provider.of<NotifierDrawing>(context, listen: false).setShowStroke(4);
       Provider.of<NotifierDrawing>(context, listen: false).setBlur(0);
       break;
   }
