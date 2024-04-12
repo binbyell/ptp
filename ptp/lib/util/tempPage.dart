@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 class TempPagePara extends StatefulWidget {
-  final String paraString;
-  const TempPagePara({ Key? key, required this.paraString}): super(key: key);
+  final String? paraString;
+  const TempPagePara({ Key? key, this.paraString}): super(key: key);
   @override
   State<TempPagePara> createState() => TempPageParaState();
 }
@@ -19,7 +19,7 @@ class TempPageParaState extends State<TempPagePara> {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Text(widget.paraString),
+        child: Text(widget.paraString??""),
       ),
     );
   }

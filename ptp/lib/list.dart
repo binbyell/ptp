@@ -2,6 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:ptp/02_dataEditPage/DataEditPage.dart';
 import 'package:ptp/10_urlpreview/urlPreView.dart';
+import 'package:ptp/11_selectPicOnWeb/selectPic.dart';
+import 'package:ptp/12_drawing04/pushPageDrawing04.dart';
+import 'package:ptp/13_customDesignButton/CustomDesignButton.dart';
+import 'package:ptp/14_downWidgetToImgOnWeb/downWidgetToImgOnWeb.dart';
 import 'package:ptp/SelectInList/selectInList.dart';
 import 'package:ptp/01_Theme/first_screen.dart';
 import 'package:ptp/checkProgress/progress.dart';
@@ -88,6 +92,31 @@ class ListScreen extends StatelessWidget{
                     child: const Text("urlPreview"),
                     onPressed:(){
                       Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const UrlPreview()));
+                    }
+                ),
+                OutlinedButton(
+                    child: const Text("SelectPicOnWeb"),
+                    onPressed:(){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const SelectPicOnWeb()));
+                    }
+                ),
+                OutlinedButton(
+                    child: const Text("drawing04"),
+                    onPressed:(){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const PushPageDrawing04()));
+                    }
+                ),
+
+                OutlinedButton(
+                    child: const Text("CustomDesignButton"),
+                    onPressed:(){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const CustomDesignButton()));
+                    }
+                ),
+                OutlinedButton(
+                    child: const Text("DownQrToImgOnWebState"),
+                    onPressed:(){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const DownQrToImgOnWeb()));
                     }
                 ),
               ],

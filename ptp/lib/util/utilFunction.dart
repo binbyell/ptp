@@ -48,3 +48,35 @@ Future<Uint8List?> getWidgetToUint8List({
   // );
   return pngBytes;
 }
+
+// Future<Uint8List?> getWidgetRenderConstrainedBoxToUint8List({
+//   required BuildContext context,
+//   required GlobalKey globalKey,}) async {
+//
+//   print("isNull : ${globalKey.currentWidget==null}");
+//
+//   RenderConstrainedBox boundary = globalKey.currentContext!.findRenderObject() as RenderConstrainedBox;
+//   // RenderCustomPaint boundary = globalKey.currentContext!.findRenderObject() as RenderCustomPaint;
+//   ui.Image image = await boundary.toImage();
+//   ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+//   Uint8List pngBytes = byteData!.buffer.asUint8List();
+//   // print(pngBytes);
+//   //
+//   // var result = await showDialog(
+//   //     context: context,
+//   //     builder: (BuildContext context) => AlertDialog(
+//   //       title: const Text("저장하시겠습니까?"),
+//   //       actions: [
+//   //         OutlinedButton(
+//   //             onPressed: (){
+//   //               Navigator.pop(context, pngBytes);
+//   //             },
+//   //             child: Text("저장")),
+//   //         OutlinedButton(
+//   //             onPressed: () => Navigator.pop(context, null),
+//   //             child: Text("취소")),
+//   //       ],
+//   //     )
+//   // );
+//   return pngBytes;
+// }

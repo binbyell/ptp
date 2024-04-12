@@ -17,7 +17,10 @@ class _UrlPreviewState extends State<UrlPreview> {
 
   final String sampleUrl = "https://novelpia.com/novel/201091?sid=main5";
 
-  static void urlToMeta(String uri) async {
+  String? previewImage = "";
+
+  void urlToMeta(String uri) async {
+    print("now run urlToMeata");
     final response = await http.get(Uri.parse(uri), headers: {
       'accept-encoding': 'gzip, deflate, br',
       'accept-language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
@@ -33,9 +36,44 @@ class _UrlPreviewState extends State<UrlPreview> {
     String? image = document.head
         ?.querySelector("meta[property='og:image']")
         ?.attributes['content'];
+    previewImage = image;
     String? url = document.head
         ?.querySelector("meta[property='og:url']")
         ?.attributes['content'];
+  }
+
+  void _getMetadata(String url) async {
+    bool _isValid = _getUrlValid(url);
+    if (_isValid) {
+      Metadata? _metadata = await AnyLinkPreview.getMetadata(
+        link: url,
+        cache: Duration(days: 7),
+        // proxyUrl: "https://blingvpn.link/",//"https://cors-anywhere.herokuapp.com/", // https://blingvpn.link/
+        proxyUrl: "https://cors-anywhere.herokuapp.com/",
+      );
+      debugPrint(_metadata?.title);
+      debugPrint(_metadata?.desc);
+      debugPrint(_metadata?.image);
+    } else {
+      debugPrint("URL is not valid");
+    }
+  }
+
+  bool _getUrlValid(String url) {
+    bool _isUrlValid = AnyLinkPreview.isValidLink(
+      url,
+      protocols: ['http', 'https'],
+      hostWhitelist: ['https://youtube.com/'],
+      hostBlacklist: ['https://facebook.com/'],
+    );
+    return _isUrlValid;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // urlToMeta(sampleUrl);
+    super.initState();
   }
 
   @override
@@ -54,12 +92,28 @@ class _UrlPreviewState extends State<UrlPreview> {
 
             TextButton(
               onPressed: ()async{
-                final response = await http.get(Uri.parse("https://novelpia.com/novel/201091?sid=main5"));
-                print("response:${response.headers}");
+                // final response = await http.get(Uri.parse("https://novelpia.com/novel/201091?sid=main5"));
+                // print("response:${response.headers}");
                 // urlToMeta(sampleUrl);
+                // print("previewImage : $previewImage");
+
+                // Metadata? _metadata = await AnyLinkPreview.getMetadata(
+                //   link: sampleUrl,
+                //   // cache: Duration(days: 7),
+                //   proxyUrl: sampleUrl//"https://cors-anywhere.herokuapp.com/", // Need for web
+                // );
+                // print(_metadata?.title);
+
+                _getMetadata("https://www.google.com/");
+                // _getMetadata("https://github.com/");
               },
               child: Text("url"),
             ),
+
+            Image.network("https://www.youtube.com/img/desktop/yt_1200.png"),
+
+
+            /*
             AnyLinkPreview(
               link: sampleUrl,
               displayDirection: UIDirection.uiDirectionHorizontal,
@@ -186,6 +240,8 @@ class _UrlPreviewState extends State<UrlPreview> {
                 ],
               ),
             ),
+
+             */
           ],
         ),
       )
