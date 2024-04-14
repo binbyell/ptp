@@ -88,29 +88,29 @@ class _UrlPreviewState extends State<UrlPreview> {
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
-            Text("https://novelpia.com/novel/201091?sid=main5"),
+            // Text("https://novelpia.com/novel/201091?sid=main5"),
+            //
+            // TextButton(
+            //   onPressed: ()async{
+            //     // final response = await http.get(Uri.parse("https://novelpia.com/novel/201091?sid=main5"));
+            //     // print("response:${response.headers}");
+            //     // urlToMeta(sampleUrl);
+            //     // print("previewImage : $previewImage");
+            //
+            //     // Metadata? _metadata = await AnyLinkPreview.getMetadata(
+            //     //   link: sampleUrl,
+            //     //   // cache: Duration(days: 7),
+            //     //   proxyUrl: sampleUrl//"https://cors-anywhere.herokuapp.com/", // Need for web
+            //     // );
+            //     // print(_metadata?.title);
+            //
+            //     _getMetadata("https://www.google.com/");
+            //     // _getMetadata("https://github.com/");
+            //   },
+            //   child: Text("url"),
+            // ),
 
-            TextButton(
-              onPressed: ()async{
-                // final response = await http.get(Uri.parse("https://novelpia.com/novel/201091?sid=main5"));
-                // print("response:${response.headers}");
-                // urlToMeta(sampleUrl);
-                // print("previewImage : $previewImage");
-
-                // Metadata? _metadata = await AnyLinkPreview.getMetadata(
-                //   link: sampleUrl,
-                //   // cache: Duration(days: 7),
-                //   proxyUrl: sampleUrl//"https://cors-anywhere.herokuapp.com/", // Need for web
-                // );
-                // print(_metadata?.title);
-
-                _getMetadata("https://www.google.com/");
-                // _getMetadata("https://github.com/");
-              },
-              child: Text("url"),
-            ),
-
-            Image.network("https://www.youtube.com/img/desktop/yt_1200.png"),
+            Image.network("https://blingvpn.link/https://www.youtube.com/img/desktop/yt_1200.png"),
 
 
             /*

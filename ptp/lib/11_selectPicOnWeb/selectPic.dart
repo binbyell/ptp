@@ -1,6 +1,9 @@
 
+import 'dart:html' as html;
+
 import 'package:flutter/material.dart';
-// import 'package:image_picker_web/image_picker_web.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 
 class SelectPicOnWeb extends StatefulWidget {
   final String? paraString;
@@ -25,15 +28,22 @@ class SelectPicOnWebState extends State<SelectPicOnWeb> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           img!=null?Image(image: img!.image,):SizedBox(),
-          // TextButton(
-          //   onPressed: () async{
-          //     Image? fromPicker = await ImagePickerWeb.getImageAsWidget();
-          //     setState(() {
-          //       img = fromPicker;
-          //     });
-          //   },
-          //   child: const Text("Select Img"),
-          // )
+          TextButton(
+            onPressed: () async{
+              // Image? fromPicker = await ImagePickerWeb.getImageAsWidget();
+              html.File? temp = await ImagePickerWeb.getImageAsFile();
+
+              ImageCropper().cropImage(sourcePath: temp!.name);
+
+              print("${temp!=null?temp.name:"null"}");
+
+              // setState(() {
+              //   // img = fromPicker;
+              //
+              // });
+            },
+            child: const Text("Select Img"),
+          )
         ],
       ),
     );
