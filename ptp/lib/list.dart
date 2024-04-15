@@ -15,6 +15,7 @@ import 'package:ptp/testProvider/testP1.dart';
 import 'package:ptp/testProvider/testP2.dart';
 import 'package:ptp/util/tempPage.dart';
 
+import '15_pushWebOnWeb/pushWebOnWeb.dart';
 import 'drawing/page_drawing.dart';
 
 class ListScreen extends StatelessWidget{
@@ -117,6 +118,12 @@ class ListScreen extends StatelessWidget{
                     child: const Text("DownQrToImgOnWebState"),
                     onPressed:(){
                       Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const DownQrToImgOnWeb()));
+                    }
+                ),
+                OutlinedButton(
+                    child: const Text("PushWebOnWeb"),
+                    onPressed:(){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const PushWebOnWeb()));
                     }
                 ),
               ],
