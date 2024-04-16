@@ -24,8 +24,6 @@ samples, guidance on mobile development, and a full API reference.
 - fcm
 - scroll
 
-1순위 - 아키택처
-- [aa](https://engineering.linecorp.com/ko/blog/flutter-architecture-getx-bloc-provider)
 
 
 
