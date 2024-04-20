@@ -27,6 +27,7 @@ class CheckProgress extends StatelessWidget {
                         builder: (_) => const ShowCase(),
                         fullscreenDialog: true,
                       ),
+
                     ),
                   ),
                 ),
